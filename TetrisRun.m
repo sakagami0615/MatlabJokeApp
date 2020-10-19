@@ -16,8 +16,8 @@ tetrisBoardObj = TetrisBoard();
 % testcode
 blockType = 1;
 rotateCount = 1;
-tetrimino = tetrisTetrinimoObj.GetTetriminoPos(blockType);
-tetrisBoardObj = tetrisBoardObj.PutTetrinino(5, 5, tetrimino{rotateCount}, blockType);
+[tetriminoRelPos, tetriminoRotate] = tetrisTetrinimoObj.GetTetrimino(blockType);
+tetrisBoardObj = tetrisBoardObj.PutTetrinino(5, 5, tetriminoRelPos{rotateCount}, blockType);
 
 
 %% 画面用意

@@ -62,11 +62,13 @@ classdef TetrisTetriminos
         end
         
         %% 指定したインデックスのブロックMatを取得
-        function tetriminoPos = GetTetriminoPos(obj, tetriminoIndex)
+        function [tetriminoRelPos, tetriminoRotate] = GetTetrimino(obj, tetriminoIndex)
             if 0 >= tetriminoIndex || obj.tetriminoNum < tetriminoIndex
-                tetriminoPos = obj.tetriminoPosList{obj.tetriminoNum};
+                tetriminoRelPos = obj.tetriminoPosList{obj.tetriminoNum};
+                tetriminoRotate = length(obj.tetriminoPosList{obj.tetriminoNum});
             else
-                tetriminoPos = obj.tetriminoPosList{tetriminoIndex};
+                tetriminoRelPos = obj.tetriminoPosList{tetriminoIndex};
+                tetriminoRotate = length(obj.tetriminoPosList{tetriminoIndex});
             end
         end
     end
