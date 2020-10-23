@@ -10,8 +10,9 @@ blockColor = vertcat(blockColor, {'Yellow',    {[1.0, 1.0, 0.0]}});
 blockColor = vertcat(blockColor, {'Green',     {[0.0, 1.0, 0.0]}});
 blockColor = vertcat(blockColor, {'Red',       {[1.0, 0.0, 0.0]}});
 blockColor = vertcat(blockColor, {'Blue',      {[0.0, 0.0, 1.0]}});
-blockColor = vertcat(blockColor, {'Orange',    {[1.0, 0.5, 0.0]}});
+blockColor = vertcat(blockColor, {'Orange',    {[1.0, 0.01, 0.0]}});
 blockColor = vertcat(blockColor, {'Purple',    {[1.0, 0.0, 0.5]}});
+blockColor = vertcat(blockColor, {'GameOver',  {[1.0, 0.0, 0.0]}});
 blockColor = vertcat(blockColor, {'None',      {[0.02, 0.02, 0.02]}});
 
 % ”Õ–Ê‚Ì•`‰æƒTƒCƒY

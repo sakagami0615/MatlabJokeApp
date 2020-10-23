@@ -5,32 +5,45 @@ function TetrisRun()
 global tetrisParam;
 tetrisParam = GetTetrisParameter();
 
-%% テトリミノ用意
-% テトリミノを作成
-tetrisTetrinimoObj = TetrisTetriminos();
+%% テトリス用クラス用意
+% テトリスクラス、テトリミノ、盤面を作成
+tetrisGameObj = TetrisGame();
 
 %% 初期化処理
-% 盤面を用意
-tetrisBoardObj = TetrisBoard();
-
-% testcode
-blockType = 1;
-rotateCount = 1;
-[tetriminoRelPos, tetriminoRotate] = tetrisTetrinimoObj.GetTetrimino(blockType);
-tetrisBoardObj = tetrisBoardObj.PutTetrinino(5, 5, tetriminoRelPos{rotateCount}, blockType);
-
+% キー入力取得用データ用意
+global keyinputState;
+keyinputState = struct( ...
+    'keyInputUp',    false, ...
+    'keyInputDown',  false, ...
+    'keyInputLeft',  false, ...
+    'keyInputRight', false...
+);
 
 %% 画面用意
-
 % メイン画面
 tetrisViewer = TetrisViewer();
 
-tetrisViewer.Draw(tetrisBoardObj.GetBoardDisplayData());
-
-
 %% メインループ
+initLoop = true;
 
+while(true)
+    if tetrisGameObj.isGameContinue
+        if initLoop
+            tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
+            initLoop = false;
+        else
+            tetrisGameObj = tetrisGameObj.Run();
+            if tetrisGameObj.isUpdate
+                tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
+            end
+        end
+    else
+        tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
+    end
+    pause(1/60);
+end
 
 %% 終了処理
+close all;
 
 end

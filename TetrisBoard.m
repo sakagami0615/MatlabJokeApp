@@ -13,7 +13,7 @@ classdef TetrisBoard
             obj.boardData = zeros(tetrisParam.boardSize.height, tetrisParam.boardSize.width);
 
             for widthIndex = 1:tetrisParam.boardSize.width
-                obj.boardData(1, widthIndex) = -1;
+                %obj.boardData(1, widthIndex) = -1;
                 obj.boardData(tetrisParam.boardSize.height, widthIndex) = -1;
             end
             for heightIndex = 1:tetrisParam.boardSize.height
@@ -21,6 +21,31 @@ classdef TetrisBoard
                 obj.boardData(heightIndex, tetrisParam.boardSize.width) = -1;
             end
             
+        end
+        
+        %% 盤面にあるブロックを一色で染める
+        function obj = PaintTetriminoAll(obj, colorIndex)
+            global tetrisParam
+            for heightIndex = 1:tetrisParam.boardSize.height
+                for widthIndex = 1:tetrisParam.boardSize.width
+                    if obj.boardData(heightIndex, widthIndex) > 0
+                        obj.boardData(heightIndex, widthIndex) = colorIndex;
+                    end
+                end
+            end
+        end
+            
+        
+        %% テトリミノを盤面に置けるかを判定
+        function judge = JudgePutTetrinino(obj, posX, posY, blockRelPosList)
+            for posIndex = 1:length(blockRelPosList)
+                relPos = blockRelPosList{posIndex};
+                if obj.boardData(posY+relPos(2), posX+relPos(1)) ~= 0
+                    judge = false;
+                    return;
+                end
+                judge = true;
+            end
         end
         
         %% テトリミノを盤面に置く

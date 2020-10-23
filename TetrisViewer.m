@@ -5,17 +5,34 @@ classdef TetrisViewer
     methods
         %% コンストラクタ
         function obj = TetrisViewer()
-            global tetrisParam;
+            global tetrisParam;            
 
             figure('Position',[0,0,tetrisParam.windosSize.width,tetrisParam.windosSize.height], ...
                    'Name', 'Tetris', ...
                    'NumberTitle','off', ...
                    'DoubleBuffer', 'on', ...
-                   'KeyPressFcn', [mfilename, ' keypress']);
+                   'KeyPressFcn', @KeyPressFnc, ...
+                   'KeyReleaseFcn', @KeyReleaseFcn);
             axes('position', [0, 0, 1, 1], ...
                  'XTick', [], 'YTick', [], ...
                  'SortMethod', 'childorder', ...
-                 'YDir', 'normal');            
+                 'YDir', 'normal');
+             
+            function KeyPressFnc(~, event)
+                global keyinputState
+                keyinputState.keyInputUp = strcmp(event.Key, 'uparrow');
+                keyinputState.keyInputDown = strcmp(event.Key, 'downarrow');
+                keyinputState.keyInputLeft = strcmp(event.Key, 'leftarrow');
+                keyinputState.keyInputRight = strcmp(event.Key, 'rightarrow');
+            end
+            
+            function KeyReleaseFcn(~, ~)
+                global keyinputState
+                keyinputState.keyInputUp = false;
+                keyinputState.keyInputDown = false;
+                keyinputState.keyInputLeft = false;
+                keyinputState.keyInputRight = false;
+            end
         end
         
         %% 描画関数
