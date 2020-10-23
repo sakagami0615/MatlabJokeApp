@@ -1,13 +1,16 @@
 classdef TetrisViewer
-    %TETRISVIEWER このクラスの概要をここに記述
-    %   詳細説明をここに記述
+    %TETRISVIEWER テトリスの盤面を描画
+    
+    properties
+        fig
+    end
 
     methods
         %% コンストラクタ
         function obj = TetrisViewer()
             global tetrisParam;            
 
-            figure('Position',[0,0,tetrisParam.windosSize.width,tetrisParam.windosSize.height], ...
+            obj.fig = figure('Position',[0,0,tetrisParam.windosSize.width,tetrisParam.windosSize.height], ...
                    'Name', 'Tetris', ...
                    'NumberTitle','off', ...
                    'DoubleBuffer', 'on', ...

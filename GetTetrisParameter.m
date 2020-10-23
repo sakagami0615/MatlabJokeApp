@@ -1,7 +1,7 @@
 function [tetrisParam] = GetTetrisParameter()
 
 % ブロックのサイズ
-blockSize = 40;
+blockSize = 35;
 
 % ブロックの色
 blockColor = table([],[], 'VariableNames',{'ColorName', 'ColorValue'});

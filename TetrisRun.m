@@ -26,20 +26,25 @@ tetrisViewer = TetrisViewer();
 %% メインループ
 initLoop = true;
 
-while(true)
+while(isgraphics(tetrisViewer.fig))
+    % ゲーム継続時
     if tetrisGameObj.isGameContinue
+        % 初回時は描画のみ実施
         if initLoop
             tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
             initLoop = false;
+        % 初回以降は、テトリミノの更新が発生した場合に描画する
         else
             tetrisGameObj = tetrisGameObj.Run();
             if tetrisGameObj.isUpdate
                 tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
             end
         end
+    % ゲームオーバー時
     else
         tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
     end
+    
     pause(1/60);
 end
 
