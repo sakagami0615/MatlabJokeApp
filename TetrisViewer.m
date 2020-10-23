@@ -1,6 +1,6 @@
 classdef TetrisViewer
     %TETRISVIEWER このクラスの概要をここに記述
-    %   詳細説明をここに記述    
+    %   詳細説明をここに記述
 
     methods
         %% コンストラクタ
@@ -15,8 +15,7 @@ classdef TetrisViewer
             axes('position', [0, 0, 1, 1], ...
                  'XTick', [], 'YTick', [], ...
                  'SortMethod', 'childorder', ...
-                 'YDir', 'normal');
-            
+                 'YDir', 'normal');            
         end
         
         %% 描画関数
@@ -25,7 +24,7 @@ classdef TetrisViewer
             
             displayData = zeros(tetrisParam.boardDisplaySize.height,tetrisParam.boardDisplaySize.width, 3);
             
-            function SetDisplayData(widthIndex, heightIndex)
+            function SetDisplayData(boardData, widthIndex, heightIndex)
                 colorIndex = boardData(heightIndex, widthIndex);
                 if colorIndex == 0
                     colorIndex = tetrisParam.blockColorNum;
@@ -36,7 +35,7 @@ classdef TetrisViewer
                 displayData(heightIndex, widthIndex, 3) = color(3);
             end
             indexPattern = combvec(1:tetrisParam.boardDisplaySize.width, 1:tetrisParam.boardDisplaySize.height)';
-            arrayfun(@SetDisplayData, indexPattern(:,1), indexPattern(:,2));
+            arrayfun(@(w,h) SetDisplayData(boardData, w, h) , indexPattern(:,1), indexPattern(:,2));
             
             image(displayData*tetrisParam.blockSize);
 
