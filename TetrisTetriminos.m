@@ -53,19 +53,22 @@ classdef TetrisTetriminos
                 {[0,0], [ 1, 0], [-1, 0], [ 0, 1]}, ...
                 {[0,0], [ 0, 1], [ 0,-1], [-1, 0]} ...
             };
-            % None
+            % NULLブロック
             obj.tetriminoPosList{8} = { ...
                 {[0,0], [0,0], [0,0], [0,0]} ...
             };
             
+            % テトリミノの個数を格納
             obj.tetriminoNum = length(obj.tetriminoPosList);
         end
         
-        %% 指定したインデックスのブロックMatを取得
+        %% 指定したインデックスのブロック相対位置と最大回転数を取得
         function [tetriminoRelPos, tetriminoRotate] = GetTetrimino(obj, tetriminoIndex)
+            % インデックスが領域外でない場合は、適切なブロック情報を返す
             if 0 >= tetriminoIndex || obj.tetriminoNum < tetriminoIndex
                 tetriminoRelPos = obj.tetriminoPosList{obj.tetriminoNum};
                 tetriminoRotate = length(obj.tetriminoPosList{obj.tetriminoNum});
+            % インデックスが領域外の場合は、NULLブロック情報を返す
             else
                 tetriminoRelPos = obj.tetriminoPosList{tetriminoIndex};
                 tetriminoRotate = length(obj.tetriminoPosList{tetriminoIndex});

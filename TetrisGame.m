@@ -24,7 +24,7 @@ classdef TetrisGame
             global tetrisParam;
             
             % 初期位置、回転数をセット
-            obj.currState.posX = 5 + 1;
+            obj.currState.posX = tetrisParam.boardSize.width/2;
             obj.currState.posY = 1 + 1;
             obj.currState.rotate = 1;
             
@@ -147,16 +147,18 @@ classdef TetrisGame
         
         %% メインループでCALLする関数
         function obj = Run(obj)
+            global tetrisParam;
+            
             % 更新フラグを初期化
             obj.isUpdate = false;
             
             % キー操作
-            if mod(obj.ctrlLoopCount, 5) == 0
+            if mod(obj.ctrlLoopCount, tetrisParam.keyinputSampleFrame) == 0
                 obj = obj.MoveTetrimino();
                 obj.ctrlLoopCount = 0;
             end
             % 落下
-            if mod(obj.fallLoopCount, 20) == 0
+            if mod(obj.fallLoopCount, tetrisParam.fallSampleFrame) == 0
                 obj = obj.FallTetrimino();
                 obj.fallLoopCount = 0;
             end

@@ -45,10 +45,7 @@ while(isgraphics(tetrisViewer.fig))
         tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
     end
     
-    pause(1/60);
+    pause(tetrisParam.sleepTime);
 end
-
-%% 終了処理
-close all;
 
 end

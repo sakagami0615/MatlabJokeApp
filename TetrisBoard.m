@@ -10,10 +10,11 @@ classdef TetrisBoard
         function obj = TetrisBoard()
             global tetrisParam;
             
+            % 盤面初期化
             obj.boardData = zeros(tetrisParam.boardSize.height, tetrisParam.boardSize.width);
 
+            % 番兵を設定
             for widthIndex = 1:tetrisParam.boardSize.width
-                %obj.boardData(1, widthIndex) = -1;
                 obj.boardData(tetrisParam.boardSize.height, widthIndex) = -1;
             end
             for heightIndex = 1:tetrisParam.boardSize.height
@@ -28,7 +29,9 @@ classdef TetrisBoard
             global tetrisParam
             for heightIndex = 1:tetrisParam.boardSize.height
                 for widthIndex = 1:tetrisParam.boardSize.width
+                    % ブロックの有無を判定
                     if obj.boardData(heightIndex, widthIndex) > 0
+                        % 指定した色インデックスに変更
                         obj.boardData(heightIndex, widthIndex) = colorIndex;
                     end
                 end
@@ -41,18 +44,24 @@ classdef TetrisBoard
             global tetrisParam
             clearLineCount = 0;
             heightIndex = tetrisParam.boardSize.height - 1;
+            % 盤面の下辺からイテレート
             while(heightIndex > clearLineCount)
+                % 探索行を取得
                 lineData = obj.boardData(heightIndex, 2:end-1);
-                if sum(lineData == 0) == 0
+                isFillLine = (sum(lineData == 0) == 0);
+                % ブロックで埋まっている場合
+                if isFillLine
+                    % ブロックで埋まっている行をカウント
                     clearLineCount = clearLineCount + 1;
-                    nextLineData = obj.boardData(heightIndex - clearLineCount, 2:end-1);
-                    obj.boardData(heightIndex, 2:end-1) = nextLineData;
-                    heightIndex = heightIndex + 1;
-                else
-                    nextLineData = obj.boardData(heightIndex - clearLineCount, 2:end-1);
-                    obj.boardData(heightIndex, 2:end-1) = nextLineData;
                 end
-                heightIndex = heightIndex - 1;
+                % 探索行を上の行で置き換える    
+                nextLineData = obj.boardData(heightIndex - clearLineCount, 2:end-1);
+                obj.boardData(heightIndex, 2:end-1) = nextLineData;
+                
+                % ブロックで埋まっている行ではない場合、デクリメントする
+                if ~isFillLine
+                    heightIndex = heightIndex - 1;
+                end
             end
         end
         
