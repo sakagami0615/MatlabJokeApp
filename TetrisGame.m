@@ -100,12 +100,17 @@ classdef TetrisGame
             
             % 更新前のテトリミノを削除する
             obj.boardObj = obj.boardObj.PopTetrinino(prevState.posX, prevState.posY, obj.currTetrimino.relativePos{prevState.rotate});
-            % 更新後のテトリミノを置ける場合は、置く
+            % 更新後のテトリミノを置ける場合
             if obj.boardObj.JudgePutTetrinino(obj.currState.posX, obj.currState.posY, obj.currTetrimino.relativePos{obj.currState.rotate})
+                % 更新後のテトリミノを置く
                 obj.boardObj = obj.boardObj.PutTetrinino(obj.currState.posX, obj.currState.posY, obj.currTetrimino.relativePos{obj.currState.rotate}, obj.currState.type);
-            % 更新後のテトリミノを置けるない場合は、更新前のテトリミノを再度置いて新規テトリミノをスポーンする
+            % 更新後のテトリミノを置けるない場合
             else
+                % 更新前のテトリミノを再度置く
                 obj.boardObj = obj.boardObj.PutTetrinino(prevState.posX, prevState.posY, obj.currTetrimino.relativePos{prevState.rotate}, prevState.type);
+                % ブロックで埋まった行を削除
+                obj.boardObj = obj.boardObj.ClearFillLine();
+                % 新規テトリミノをスポーン
                 obj = obj.SpawnTetrimino();
             end
             % テトリミノ更新フラグを立てる

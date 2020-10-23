@@ -34,7 +34,27 @@ classdef TetrisBoard
                 end
             end
         end
-            
+        
+        
+        %% 埋まった行を削除
+        function obj = ClearFillLine(obj)
+            global tetrisParam
+            clearLineCount = 0;
+            heightIndex = tetrisParam.boardSize.height - 1;
+            while(heightIndex > clearLineCount)
+                lineData = obj.boardData(heightIndex, 2:end-1);
+                if sum(lineData == 0) == 0
+                    clearLineCount = clearLineCount + 1;
+                    nextLineData = obj.boardData(heightIndex - clearLineCount, 2:end-1);
+                    obj.boardData(heightIndex, 2:end-1) = nextLineData;
+                    heightIndex = heightIndex + 1;
+                else
+                    nextLineData = obj.boardData(heightIndex - clearLineCount, 2:end-1);
+                    obj.boardData(heightIndex, 2:end-1) = nextLineData;
+                end
+                heightIndex = heightIndex - 1;
+            end
+        end
         
         %% テトリミノを盤面に置けるかを判定
         function judge = JudgePutTetrinino(obj, posX, posY, blockRelPosList)
