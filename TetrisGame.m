@@ -117,8 +117,6 @@ classdef TetrisGame
             obj.isUpdate = true;
             
         end
-        
-        
     end
     
     methods

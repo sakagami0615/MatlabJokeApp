@@ -5,39 +5,21 @@ classdef TetrisViewer
         fig
     end
 
-    methods
+    methods        
         %% コンストラクタ
-        function obj = TetrisViewer()
-            global tetrisParam;            
+        function obj = TetrisViewer(keyEventObj)
+            global tetrisParam; 
             % 描画用画像を用意
             obj.fig = figure('Position',[0,0,tetrisParam.windosSize.width,tetrisParam.windosSize.height], ...
                    'Name', tetrisParam.windowTitle, ...
                    'NumberTitle','off', ...
                    'DoubleBuffer', 'on', ...
-                   'KeyPressFcn', @KeyPressFnc, ...
-                   'KeyReleaseFcn', @KeyReleaseFcn);
+                   'KeyPressFcn', @keyEventObj.KeyPressFnc, ...
+                   'KeyReleaseFcn', @keyEventObj.KeyReleaseFcn);
             axes('position', [0, 0, 1, 1], ...
                  'XTick', [], 'YTick', [], ...
                  'SortMethod', 'childorder', ...
                  'YDir', 'normal');
-            
-            % キー入力時のイベント関数
-            function KeyPressFnc(~, event)
-                global keyinputState
-                keyinputState.keyInputUp = strcmp(event.Key, 'uparrow');
-                keyinputState.keyInputDown = strcmp(event.Key, 'downarrow');
-                keyinputState.keyInputLeft = strcmp(event.Key, 'leftarrow');
-                keyinputState.keyInputRight = strcmp(event.Key, 'rightarrow');
-            end
-            
-            % キー未入力時のイベント関数
-            function KeyReleaseFcn(~, ~)
-                global keyinputState
-                keyinputState.keyInputUp = false;
-                keyinputState.keyInputDown = false;
-                keyinputState.keyInputLeft = false;
-                keyinputState.keyInputRight = false;
-            end
         end
                 
         %% 描画関数
@@ -65,7 +47,6 @@ classdef TetrisViewer
             image(displayData*tetrisParam.blockSize);
 
         end
-
     end
 end
 

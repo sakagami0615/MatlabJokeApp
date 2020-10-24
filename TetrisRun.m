@@ -11,17 +11,11 @@ tetrisGameObj = TetrisGame();
 
 %% 初期化処理
 % キー入力取得用データ用意
-global keyinputState;
-keyinputState = struct( ...
-    'keyInputUp',    false, ...
-    'keyInputDown',  false, ...
-    'keyInputLeft',  false, ...
-    'keyInputRight', false...
-);
+keyEventObj = KeyEvent();
 
 %% 画面用意
 % メイン画面
-tetrisViewer = TetrisViewer();
+tetrisViewer = TetrisViewer(keyEventObj);
 
 %% メインループ
 initLoop = true;
