@@ -30,7 +30,8 @@ while(isgraphics(tetrisViewer.fig))
             if initLoop
                 tetrisViewer.Draw(tetrisGameObj.boardObj.GetBoardDisplayData());
                 initLoop = false;
-            % 初回以降は、テトリミノの更新が発生した場合に描画する
+            % 初回以降は、テトリス処理を実施する
+            % また、テトリミノの更新が発生した場合に描画する
             else
                 tetrisGameObj = tetrisGameObj.Run();
                 if tetrisGameObj.isUpdate

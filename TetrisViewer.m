@@ -38,8 +38,11 @@ classdef TetrisViewer
             obj.fig.Position = obj.GetFigurePosition();
         end
         
+        %% デストラクタ
         function delete(obj)
-            close(obj.fig);
+            if isgraphics(obj.fig)
+                close(obj.fig);
+            end
         end
                 
         %% 描画関数
