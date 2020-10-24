@@ -9,6 +9,7 @@ classdef KeyEvent
             % キー入力取得用データ用意
             global keyinputState;
             keyinputState = struct( ...
+                'keyInputEsc',   false, ...
                 'keyInputUp',    false, ...
                 'keyInputDown',  false, ...
                 'keyInputLeft',  false, ...
@@ -19,6 +20,7 @@ classdef KeyEvent
         %% キー入力時のイベント関数
         function KeyPressFnc(~, ~, event)
             global keyinputState
+            keyinputState.keyInputEsc = strcmp(event.Key, 'escape');
             keyinputState.keyInputUp = strcmp(event.Key, 'uparrow');
             keyinputState.keyInputDown = strcmp(event.Key, 'downarrow');
             keyinputState.keyInputLeft = strcmp(event.Key, 'leftarrow');
@@ -28,6 +30,7 @@ classdef KeyEvent
         %% キー未入力時のイベント関数
         function KeyReleaseFcn(~, ~, ~)
             global keyinputState
+            keyinputState.keyInputEsc = false;
             keyinputState.keyInputUp = false;
             keyinputState.keyInputDown = false;
             keyinputState.keyInputLeft = false;

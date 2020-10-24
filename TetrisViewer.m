@@ -4,22 +4,42 @@ classdef TetrisViewer
     properties
         fig
     end
+    
+    methods (Access = 'private')
+        %% ウィンドウのPositionを計算する
+        function position = GetFigurePosition(obj)
+            global tetrisParam;
+            
+            currPosX = obj.fig.Position(1) + obj.fig.Position(3) - tetrisParam.windosSize.width;
+            currPosY = obj.fig.Position(2) + obj.fig.Position(4) - tetrisParam.windosSize.height;
+            
+            position = [currPosX, currPosY, tetrisParam.windosSize.width, tetrisParam.windosSize.height];
+        end
+    end
 
-    methods        
+    methods
         %% コンストラクタ
         function obj = TetrisViewer(keyEventObj)
-            global tetrisParam; 
+            global tetrisParam;
             % 描画用画像を用意
-            obj.fig = figure('Position',[0,0,tetrisParam.windosSize.width,tetrisParam.windosSize.height], ...
+            obj.fig = figure(...
                    'Name', tetrisParam.windowTitle, ...
                    'NumberTitle','off', ...
                    'DoubleBuffer', 'on', ...
+                   'Resize', 'off', ...
                    'KeyPressFcn', @keyEventObj.KeyPressFnc, ...
                    'KeyReleaseFcn', @keyEventObj.KeyReleaseFcn);
-            axes('position', [0, 0, 1, 1], ...
+            axes(obj.fig, 'position', [0, 0, 1, 1], ...
                  'XTick', [], 'YTick', [], ...
                  'SortMethod', 'childorder', ...
                  'YDir', 'normal');
+            
+            % ウィンドウのPositionをセット
+            obj.fig.Position = obj.GetFigurePosition();
+        end
+        
+        function delete(obj)
+            close(obj.fig);
         end
                 
         %% 描画関数
